@@ -98,27 +98,21 @@ public class HomeFragment extends Fragment implements CardStackListener {
         if (direction == Direction.Left) {
             Log.d("CardStackView", "Unliked " + layoutManager.getTopPosition());
         } else if (direction == Direction.Right) {
-            Log.d("CardStackViedw", "Liked "  + layoutManager.getTopPosition());
+            Log.d("CardStackView", "Liked "  + layoutManager.getTopPosition());
+            Article article = articles.get(layoutManager.getTopPosition() - 1);
+            viewModel.setFavoriteArticleInput(article);
         }
     }
 
     @Override
-    public void onCardRewound() {
-
-    }
+    public void onCardRewound() { }
 
     @Override
-    public void onCardCanceled() {
-
-    }
+    public void onCardCanceled() { }
 
     @Override
-    public void onCardAppeared(View view, int position) {
-
-    }
+    public void onCardAppeared(View view, int position) { }
 
     @Override
-    public void onCardDisappeared(View view, int position) {
-
-    }
+    public void onCardDisappeared(View view, int position) { }
 }
