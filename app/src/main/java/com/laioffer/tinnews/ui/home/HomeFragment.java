@@ -75,8 +75,8 @@ public class HomeFragment extends Fragment implements CardStackListener {
                             }
                         });
 
-        binding.homeLikeButton.setOnClickListener(v -> swipeCard(Direction.Right));
-        binding.homeUnlikeButton.setOnClickListener(v -> swipeCard(Direction.Left));
+//        binding.homeLikeButton.setOnClickListener(v -> swipeCard(Direction.Right));
+//        binding.homeUnlikeButton.setOnClickListener(v -> swipeCard(Direction.Left));
     }
 
     private void swipeCard(Direction direction) {
