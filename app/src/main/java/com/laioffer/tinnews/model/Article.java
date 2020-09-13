@@ -1,20 +1,24 @@
 package com.laioffer.tinnews.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Article {
+public class Article implements Serializable {
     public String author;
     public String content;
     public String description;
     public String publishedAt;
     public String title;
-    public String urlToImage;
     public boolean favorite;
+
+    @Nullable
+    public String urlToImage;
 
     @NonNull
     @PrimaryKey

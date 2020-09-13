@@ -22,6 +22,7 @@ import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements CardStackListener {
@@ -71,12 +72,16 @@ public class HomeFragment extends Fragment implements CardStackListener {
                             Log.d("HomeFragment", newsResponse.toString());
                             if (newsResponse != null) {
                                 articles = newsResponse.articles;
+                                articles = filterNoImage(articles);
                                 swipeAdapter.setArticles(articles);
                             }
                         });
+    }
 
-//        binding.homeLikeButton.setOnClickListener(v -> swipeCard(Direction.Right));
-//        binding.homeUnlikeButton.setOnClickListener(v -> swipeCard(Direction.Left));
+    private List<Article> filterNoImage(List<Article> articles) {
+        List<Article> filtered = new ArrayList<>();
+        for (Article article : articles) if (article.urlToImage != null) filtered.add(article);
+        return filtered;
     }
 
     private void swipeCard(Direction direction) {

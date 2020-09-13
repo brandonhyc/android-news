@@ -33,14 +33,7 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
         return new SearchNewsViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull SearchNewsViewHolder holder, int position) {
-        Article article = articles.get(position);
-        holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_24dp);
-        holder.itemTitleTextView.setText(article.title);
-        Picasso.get().setLoggingEnabled(true);
-        Picasso.get().load(article.urlToImage).into(holder.itemImageView);
-    }
+    private ItemCallback itemCallback;
 
     @Override
     public int getItemCount() {
@@ -60,5 +53,37 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
             itemImageView = binding.searchItemImage;
             itemTitleTextView = binding.searchItemTitle;
         }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull SearchNewsViewHolder holder, int position) {
+        Article article = articles.get(position);
+        holder.itemTitleTextView.setText(article.title);
+        if (article.favorite) {
+            holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_24dp);
+        } else {
+            holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_border_24dp);
+        }
+        holder.favoriteImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                article.favorite = !article.favorite;
+                notifyItemRangeChanged(position, 1);
+
+            }
+        });
+        holder.itemView.setOnClickListener(v -> itemCallback.onOpenDetails(article));
+
+        if (article.urlToImage != null) {
+            Picasso.get().load(article.urlToImage).into(holder.itemImageView);
+        }
+    }
+
+    public void setItemCallback(ItemCallback itemCallback) {
+        this.itemCallback = itemCallback;
+    }
+
+    interface ItemCallback {
+        void onOpenDetails(Article article);
     }
 }

@@ -1,20 +1,19 @@
 package com.laioffer.tinnews.ui.search;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.databinding.FragmentSearchBinding;
 import com.laioffer.tinnews.repositiry.NewsRepository;
 import com.laioffer.tinnews.repositiry.NewsViewModelFactory;
@@ -49,6 +48,10 @@ public class SearchFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 1);
         NewsRepository repository = new NewsRepository(getContext());
 
+        newsAdapter.setItemCallback(article -> {
+            SearchFragmentDirections.ActionNavigationSearchToNavigationDetails direction = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(article);
+            NavHostFragment.findNavController(SearchFragment.this).navigate(direction);
+        });
         viewModel = new ViewModelProvider(this, new NewsViewModelFactory(repository))
                 .get(SearchViewModel.class);
 
